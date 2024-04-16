@@ -1,8 +1,13 @@
+"use client";
 import { Button } from "@/components/ui/button";
+
 import { ArrowDown, Ghost } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <div className="h-full w-full relative">
       <nav className="z-10 fixed w-full h-16 bg-primary text-primary-foreground py-5 px-6 flex items-center justify-between">
@@ -10,8 +15,14 @@ export default function Home() {
           <Ghost className="h-8 w-8" />
           <h1 className="font-bold text-xl">Dev Quest</h1>
         </Link>
-        <Button variant="secondary" size="lg" className="font-bold">
-          Log In
+
+        <Button
+          variant="secondary"
+          onClick={() => router.push("/sign-in")}
+          size="lg"
+          className="font-bold"
+        >
+          Sign In
         </Button>
       </nav>
       <div className="">
@@ -37,7 +48,12 @@ export default function Home() {
             <h2 className="font-bold text-6xl  pb-3 text-foreground mb-8">
               Let's Try DevQuest
             </h2>
-            <Button variant="default" size="lg" className=" w-full text-lg">
+            <Button
+              variant="default"
+              onClick={() => router.push("/sign-in")}
+              size="lg"
+              className=" w-full text-lg"
+            >
               Sign In
             </Button>
           </div>
