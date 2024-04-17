@@ -11,16 +11,16 @@ export default function Home() {
   return (
     <div className="h-full w-full relative">
       <nav className="z-10 fixed w-full h-16 bg-primary text-primary-foreground py-5 px-6 flex items-center justify-between">
-        <Link href="/" className="flex gap-3 items-center">
-          <Ghost className="h-8 w-8" />
-          <h1 className="font-bold text-xl">Dev Quest</h1>
+        <Link href="/" className="flex gap-2 items-center">
+          <Ghost className="h-6 w-6" />
+          <h1 className="font-bold ">Dev Quest</h1>
         </Link>
 
         <Button
           variant="secondary"
           onClick={() => router.push("/sign-in")}
-          size="lg"
-          className="font-bold"
+          size="sm"
+          className="font-bold px-6"
         >
           Sign In
         </Button>
@@ -40,7 +40,7 @@ export default function Home() {
           id="introduce"
         >
           <h2 className="font-bold text-6xl  pb-3 text-secondary">
-            AI　×　自己分析　×　ES
+            AI × 自己分析 × ES
           </h2>
         </section>
         <section className="h-screen flex items-center justify-center flex-col ">
