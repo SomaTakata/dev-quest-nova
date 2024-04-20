@@ -23,22 +23,15 @@ export default function Home() {
             </div>
             <PlusCircle size={30} />
           </div>
-          <div className="h-11 bg-green-500 w-full" />
+          <div className="h-10 w-full" />
           {/* カードリスト */}
-          <div
-            className="  bg-slate-400 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3
-      xl:grid-cols-3 2xl:grid-cols-5 gap-7"
-          >
-            <Card className=" h-56 w-80 p-4"></Card>
-            <Card className=" h-56 w-80 p-4"></Card>
-            <Card className=" h-56 w-80 p-4"></Card>
-            <Card className=" h-56 w-80 p-4"></Card>
-            <Card className=" h-56 w-80 p-4"></Card>
-            <Card className=" h-56 w-80 p-4"></Card>
-            <Card className=" h-56 w-80 p-4"></Card>
-            <Card className=" h-56 w-80 p-4"></Card>
-            <Card className=" h-56 w-80 p-4"></Card>
-            <Card className=" h-56 w-80 p-4"></Card>
+          <div className="  bg-slate-400 gap-4 grid sm:grid-cols-1  md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5  ">
+            <Card className=" h-56 w-full p-4"></Card>
+            <Card className=" h-56 w-full p-4"></Card>
+            <Card className=" h-56 w-full p-4"></Card>
+            <Card className=" h-56 w-full p-4"></Card>
+            <Card className=" h-56 w-full p-4"></Card>
+            <Card className=" h-56 w-full p-4"></Card>
           </div>
         </div>
       </div>
