@@ -11,8 +11,8 @@ export default function Home() {
     <div className="h-full w-full flex relative">
       <SideBar />
       <NavBar />
-      <div className="-z-20 w-full h-full ml-52 mt-14 ">
-        <div className="p-7 bg-muted/30 flex flex-col">
+      <div className="-z-20 w-full h-full ml-52 pt-12  ">
+        <div className="p-10 bg-muted-foreground/10  flex flex-col">
           {/* 上部タイトルとアイコン */}
           <div className="w-full flex justify-between items-center">
             <div className="flex flex-col">
@@ -23,11 +23,9 @@ export default function Home() {
             </div>
             <PlusCircle size={30} />
           </div>
-          <div className="h-10 w-full" />
+          <div className="h-10 w-full " />
           {/* カードリスト */}
-          <div className="  bg-slate-400 gap-4 grid sm:grid-cols-1  md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5  ">
-            <Card className=" h-56 w-full p-4"></Card>
-            <Card className=" h-56 w-full p-4"></Card>
+          <div className="gap-5 grid sm:grid-cols-1  md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5  ">
             <Card className=" h-56 w-full p-4"></Card>
             <Card className=" h-56 w-full p-4"></Card>
             <Card className=" h-56 w-full p-4"></Card>
