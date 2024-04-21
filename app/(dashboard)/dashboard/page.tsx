@@ -31,7 +31,7 @@ export default function Home() {
           {/* カードリスト */}
           <div className="gap-5 grid sm:grid-cols-1  md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5  ">
             {/* カード */}
-            <div className="relative  w-full p-6 rounded-lg border border-card-foreground/10 bg-card  shadow-md ">
+            <div className=" w-full p-6 rounded-lg border border-card-foreground/10 bg-card  shadow-md ">
               <div className="px-3">
                 <div className="flex items-center justify-between mb-9">
                   <p className=" font-bold text-xl ">株式会社サポーターズ</p>
@@ -50,13 +50,6 @@ export default function Home() {
                     60%
                   </p>
                 </div>
-
-                {/* <div className="absolute bottom-2 right-5 text-xs space-x-2 font-semibold ">
-                  <span className="text-accent-foreground ">作成日</span>
-                  <span className="text-muted-foreground/50 ">
-                    2024年11月11日
-                  </span>
-                </div> */}
               </div>
             </div>
           </div>
