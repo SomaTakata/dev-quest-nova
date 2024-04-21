@@ -13,9 +13,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
 import React, { useState } from "react";
-import { CreateProjectForm, Props } from "./CreateProjectForm";
+import { CreateProjectForm } from "./CreateProjectForm";
 
-const DashBoardHeader = ({ open, setOpen }: Props) => {
+const DashBoardHeader = () => {
+  const [open, setOpen] = useState(false);
   return (
     <div className="w-full flex justify-between items-center">
       <div className="flex flex-col">
@@ -33,7 +34,7 @@ const DashBoardHeader = ({ open, setOpen }: Props) => {
             <DialogTitle>ESの情報を登録します</DialogTitle>
           </DialogHeader>
           <div className="w-full">
-            <CreateProjectForm open={open} setOpen={setOpen} />
+            <CreateProjectForm setOpen={setOpen} />
           </div>
         </DialogContent>
       </Dialog>
