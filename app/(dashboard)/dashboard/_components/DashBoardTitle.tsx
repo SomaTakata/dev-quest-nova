@@ -1,7 +1,21 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
+import { CreateProjectForm, Props } from "./CreateProjectForm";
 
-const DashBoardHeader = () => {
+const DashBoardHeader = ({ open, setOpen }: Props) => {
   return (
     <div className="w-full flex justify-between items-center">
       <div className="flex flex-col">
@@ -10,7 +24,19 @@ const DashBoardHeader = () => {
           今日は2024年5月10日です
         </p>
       </div>
-      <PlusCircle size={30} />
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger>
+          <PlusCircle size={30} />
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px] p-8">
+          <DialogHeader className="mb-3">
+            <DialogTitle>ESの情報を登録します</DialogTitle>
+          </DialogHeader>
+          <div className="w-full">
+            <CreateProjectForm open={open} setOpen={setOpen} />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
