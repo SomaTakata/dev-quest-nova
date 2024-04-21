@@ -1,5 +1,5 @@
-import SideBar from "./_components/SideBar";
-import NavBar from "./_components/NavBar";
+import SideBar from "../_components/SideBar";
+import NavBar from "../_components/NavBar";
 import { PlusCircle } from "lucide-react";
 
 import { Progress } from "@/components/ui/progress";
