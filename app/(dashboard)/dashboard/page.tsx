@@ -5,7 +5,7 @@ import Card from "./_components/Card";
 import { CardList } from "./_components/CardList";
 import DashBoardHeader from "./_components/DashBoardTitle";
 import { useLocalStorage } from "react-use";
-import { nanoid } from "nanoid";
+import Link from "next/link";
 
 export default function Home() {
   interface ProjectItem {
@@ -14,7 +14,7 @@ export default function Home() {
     deadline: string;
     url: string;
   }
-  const [value, setValue, remove] = useLocalStorage<ProjectItem[]>("test", []);
+  const [value] = useLocalStorage<ProjectItem[]>("test");
 
   console.log(value);
   return (
@@ -29,16 +29,17 @@ export default function Home() {
           {/* カードリスト */}
           <CardList>
             {/* カード */}
-            {value?.map((item, index) => {
+            {value?.map((item) => {
               console.log(item);
               return (
-                <Card
-                  key={index}
-                  companyName={item.companyName}
-                  deadline={item.deadline}
-                  url={item.url}
-                  id={item.id}
-                />
+                <Link href={`/dashboard/${item.id}`}>
+                  <Card
+                    key={item.id}
+                    companyName={item.companyName}
+                    deadline={item.deadline}
+                    url={item.url}
+                  />
+                </Link>
               );
             })}
           </CardList>
