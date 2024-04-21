@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { useState } from "react";
+import { useLocalStorage } from "react-use";
 
 const formSchema = z.object({
   companyName: z.string().min(1, {
@@ -29,12 +30,11 @@ const formSchema = z.object({
   }),
 });
 
-export interface Props {
-  open: boolean;
+interface Props {
   setOpen: (open: boolean) => void;
 }
 
-export function CreateProjectForm({ open, setOpen }: Props) {
+export function CreateProjectForm({ setOpen }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,11 +43,20 @@ export function CreateProjectForm({ open, setOpen }: Props) {
       url: "",
     },
   });
-
+  const [value, setValue, remove] = useLocalStorage("test", {
+    companyName: "",
+    deadline: "",
+    url: "",
+  });
   function onSubmit(values: z.infer<typeof formSchema>) {
+    setValue({
+      companyName: values.companyName,
+      deadline: values.deadline,
+      url: values.url,
+    });
     setOpen(false);
   }
-
+  console.log(value);
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
