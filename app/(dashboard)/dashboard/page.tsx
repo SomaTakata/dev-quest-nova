@@ -1,10 +1,20 @@
+"use client";
 import SideBar from "../_components/SideBar";
 import NavBar from "../_components/NavBar";
 import Card from "./_components/Card";
 import { CardList } from "./_components/CardList";
 import DashBoardHeader from "./_components/DashBoardTitle";
+import { useLocalStorage } from "react-use";
 
 export default function Home() {
+  interface ProjectItem {
+    companyName: string;
+    deadline: string;
+    url: string;
+  }
+  const [value, setValue, remove] = useLocalStorage<ProjectItem[]>("test", []);
+
+  console.log(value);
   return (
     <div className="h-full w-full flex relative">
       <SideBar />
@@ -17,7 +27,17 @@ export default function Home() {
           {/* カードリスト */}
           <CardList>
             {/* カード */}
-            <Card />
+            {value?.map((item, index) => {
+              console.log(item);
+              return (
+                <Card
+                  key={index}
+                  companyName={item.companyName}
+                  deadline={item.deadline}
+                  url={item.url}
+                />
+              );
+            })}
           </CardList>
         </div>
       </div>
