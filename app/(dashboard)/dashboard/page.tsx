@@ -6,23 +6,22 @@ import { MoreHorizontal, PlusCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
   const { user } = useClerk();
-
-  const [progress, setProgress] = useState(13);
 
   return (
     <div className="h-full w-full flex relative">
       <SideBar />
       <NavBar />
       <div className="z-10 w-full h-full ml-52 pt-10  ">
-        <div className="p-10 bg-muted-foreground/15  flex flex-col">
+        <div className="p-10   flex flex-col">
           {/* 上部タイトルとアイコン */}
           <div className="w-full flex justify-between items-center">
             <div className="flex flex-col">
               <h1 className="text-3xl font-bold">DashBoard</h1>
-              <p className="text-muted-foreground/30 font-bold text-xs">
+              <p className="text-muted-foreground/15 font-bold text-xs">
                 Welcome back {user?.fullName}
               </p>
             </div>
@@ -30,99 +29,34 @@ export default function Home() {
           </div>
           <div className="h-10 w-full " />
           {/* カードリスト */}
-          <div className="gap-5 grid sm:grid-cols-1  md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5  ">
+          <div className="gap-5 grid sm:grid-cols-1  md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5  ">
             {/* カード */}
-            <div className=" h-52 w-full p-4 rounded-lg border border-card bg-card  shadow-sm ">
-              <div className="flex justify-end mb-1">
-                <MoreHorizontal
-                  size={22}
-                  className="text-muted-foreground/50 "
-                  onClick={() => ""}
-                />
-              </div>
+            <div className="relative  w-full p-6 rounded-lg border border-card-foreground/10 bg-card  shadow-md ">
               <div className="px-3">
-                <p className=" font-bold text-xl mb-7">株式会社サポーターズ</p>
-                <div className="flex  mb-2 gap-4 font-semibold items-center">
-                  <p className=" text-sm text-accent-foreground  ">期限</p>
-                  <p className="text-muted-foreground/50 text-sm ">
-                    2024年11月11日
-                  </p>
+                <div className="flex items-center justify-between mb-9">
+                  <p className=" font-bold text-xl ">株式会社サポーターズ</p>
+                  <Badge className="h-6 bg-green-400">提出済み</Badge>
                 </div>
-                <div className="flex mb-8 gap-3 items-center">
-                  <p className="text-accent-foreground text-sm font-semibold">
-                    進捗
-                  </p>
+                <div className="flex  mb-2 gap-5 font-semibold items-center">
+                  <p className=" text-sm text-primary  ">締め切り</p>
+                  <p className="text-muted-foreground/50 text-sm ">あと10日</p>
+                </div>
 
-                  <Progress value={33} className="h-3 w-[80%]" />
+                <div className="flex mb-5 gap-5 items-center">
+                  <p className="text-primary text-sm font-semibold">進捗</p>
+
+                  <Progress value={33} className="h-3 w-[60%]" />
+                  <p className="text-muted-foreground/50 text-sm font-semibold">
+                    60%
+                  </p>
                 </div>
-                <div className="text-right text-xs space-x-2 font-semibold ">
+
+                {/* <div className="absolute bottom-2 right-5 text-xs space-x-2 font-semibold ">
                   <span className="text-accent-foreground ">作成日</span>
                   <span className="text-muted-foreground/50 ">
                     2024年11月11日
                   </span>
-                </div>
-              </div>
-            </div>
-            <div className=" h-52 w-full p-4 rounded-lg border border-card bg-card  shadow-sm ">
-              <div className="flex justify-end mb-1">
-                <MoreHorizontal
-                  size={22}
-                  className="text-muted-foreground/50 "
-                  onClick={() => ""}
-                />
-              </div>
-              <div className="px-3">
-                <p className=" font-bold text-xl mb-8">株式会社サポーターズ</p>
-                <div className="flex  mb-2 gap-4 font-semibold items-center">
-                  <p className=" text-sm text-accent-foreground  ">期限</p>
-                  <p className="text-muted-foreground/50 text-sm ">
-                    2024年11月11日
-                  </p>
-                </div>
-                <div className="flex mb-8 gap-3 items-center">
-                  <p className="text-accent-foreground text-sm font-semibold">
-                    進捗
-                  </p>
-
-                  <Progress value={33} className="h-3 w-[80%]" />
-                </div>
-                <div className="text-right text-xs space-x-2 font-semibold">
-                  <span className="text-accent-foreground ">作成日</span>
-                  <span className="text-muted-foreground/50 ">
-                    2024年11月11日
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className=" h-52 w-full p-4 rounded-lg border border-card bg-card  shadow-sm ">
-              <div className="flex justify-end mb-1">
-                <MoreHorizontal
-                  size={22}
-                  className="text-muted-foreground/50 "
-                  onClick={() => ""}
-                />
-              </div>
-              <div className="px-3">
-                <p className=" font-bold text-xl mb-8">株式会社サポーターズ</p>
-                <div className="flex  mb-2 gap-4 font-semibold items-center">
-                  <p className=" text-sm text-accent-foreground  ">期限</p>
-                  <p className="text-muted-foreground/50 text-sm ">
-                    2024年11月11日
-                  </p>
-                </div>
-                <div className="flex mb-8 gap-3 items-center">
-                  <p className="text-accent-foreground text-sm font-semibold">
-                    進捗
-                  </p>
-
-                  <Progress value={33} className="h-3 w-[80%]" />
-                </div>
-                <div className="text-right text-xs space-x-2 font-semibold">
-                  <span className="text-accent-foreground ">作成日</span>
-                  <span className="text-muted-foreground/50 ">
-                    2024年11月11日
-                  </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
