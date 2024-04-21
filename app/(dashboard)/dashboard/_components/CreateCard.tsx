@@ -15,7 +15,7 @@ const CreateCard = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="rounded-lg gap-3 p-6 border-[3px] bg-inherit border-muted-foreground/40 flex flex-col justify-center items-center hover:bg-muted-foreground/5">
+        <div className="h-[178px] rounded-lg gap-3 p-6 border-[3px] bg-inherit border-muted-foreground/40 flex flex-col justify-center items-center hover:bg-muted-foreground/5">
           <p className="text-muted-foreground/40 text-xl font-bold">
             新しく作成する
           </p>

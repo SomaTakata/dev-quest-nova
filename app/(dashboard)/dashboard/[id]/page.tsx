@@ -7,7 +7,7 @@ const page = () => {
     <div className="h-full w-full flex relative">
       <SideBar />
       <NavBar />
-      <div className="z-10 w-full h-full ml-52 pt-10  ">Edit Page</div>
+      <div className="z-10 w-full h-full ml-52 pt-14  ">Edit Page</div>
     </div>
   );
 };
