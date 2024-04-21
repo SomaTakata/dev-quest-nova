@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,9 +12,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
+import { CreateProjectForm } from "./CreateProjectForm";
 
 const DashBoardHeader = () => {
+  const [open, setOpen] = useState(false);
   return (
     <div className="w-full flex justify-between items-center">
       <div className="flex flex-col">
@@ -22,39 +25,17 @@ const DashBoardHeader = () => {
           今日は2024年5月10日です
         </p>
       </div>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger>
           <PlusCircle size={30} />
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] p-8">
           <DialogHeader>
-            <DialogTitle>会社名を登録します。</DialogTitle>
+            <DialogTitle>ESの情報を登録します</DialogTitle>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input
-                id="name"
-                defaultValue="Pedro Duarte"
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Username
-              </Label>
-              <Input
-                id="username"
-                defaultValue="@peduarte"
-                className="col-span-3"
-              />
-            </div>
+          <div className="w-full">
+            <CreateProjectForm open={open} setOpen={setOpen} />
           </div>
-          <DialogFooter>
-            <Button type="submit">Save changes</Button>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
