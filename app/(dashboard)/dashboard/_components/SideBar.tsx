@@ -21,11 +21,11 @@ const SideBar = () => {
 
   console.log(pathname);
   return (
-    <div className="fixed left-0 w-52 z-30 bg-primary flex flex-col rounded-r-xl h-full">
+    <div className="fixed left-0 w-48 z-30 bg-primary flex flex-col rounded-r-xl h-full">
       <div
         onClick={() => router.push("/dashboard")}
         className={cn(
-          "text-white cursor-pointer font-medium flex gap-4 pl-10  mt-10",
+          "text-white cursor-pointer font-medium flex gap-4 pl-8  mt-10",
         )}
       >
         <Ghost className="h-6 w-6" />
