@@ -18,6 +18,12 @@ import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useLocalStorage } from "react-use";
 
+interface ProjectItem {
+  companyName: string;
+  deadline: string;
+  url: string;
+}
+
 const formSchema = z.object({
   companyName: z.string().min(1, {
     message: "必須項目です",
@@ -43,20 +49,21 @@ export function CreateProjectForm({ setOpen }: Props) {
       url: "",
     },
   });
-  const [value, setValue, remove] = useLocalStorage("test", {
-    companyName: "",
-    deadline: "",
-    url: "",
-  });
+
+  const [value, setValue, remove] = useLocalStorage<ProjectItem[]>("test", []);
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setValue({
-      companyName: values.companyName,
-      deadline: values.deadline,
-      url: values.url,
-    });
+    const currentValue = Array.isArray(value) ? value : [];
+    setValue([
+      ...currentValue,
+      {
+        companyName: values.companyName,
+        deadline: values.deadline,
+        url: values.url,
+      },
+    ]);
     setOpen(false);
   }
-  console.log(value);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
