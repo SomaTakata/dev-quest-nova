@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@clerk/nextjs': ^4.29.12
+  '@hookform/resolvers': ^3.3.4
   '@radix-ui/react-dialog': ^1.0.5
   '@radix-ui/react-label': ^2.0.2
   '@radix-ui/react-progress': ^1.0.3
@@ -22,14 +23,17 @@ specifiers:
   prettier: 3.2.5
   react: ^18
   react-dom: ^18
+  react-hook-form: ^7.51.3
   shadcn-ui: ^0.8.0
   tailwind-merge: ^2.2.2
   tailwindcss: ^3.3.0
   tailwindcss-animate: ^1.0.7
   typescript: ^5
+  zod: ^3.22.5
 
 dependencies:
   '@clerk/nextjs': 4.29.12_h6dj7hpgrjuca5cqek3dk6bqim
+  '@hookform/resolvers': 3.3.4_react-hook-form@7.51.3
   '@radix-ui/react-dialog': 1.0.5_pririwar4m3afwc3lk45uql2te
   '@radix-ui/react-label': 2.0.2_pririwar4m3afwc3lk45uql2te
   '@radix-ui/react-progress': 1.0.3_pririwar4m3afwc3lk45uql2te
@@ -40,8 +44,10 @@ dependencies:
   next: 14.1.4_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-hook-form: 7.51.3_react@18.2.0
   tailwind-merge: 2.2.2
   tailwindcss-animate: 1.0.7_tailwindcss@3.4.3
+  zod: 3.22.5
 
 devDependencies:
   '@types/node': 20.12.7
@@ -489,6 +495,14 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@hookform/resolvers/3.3.4_react-hook-form@7.51.3:
+    resolution: {integrity: sha512-o5cgpGOuJYrd+iMKvkttOclgwRW86EsWJZZRC23prf0uU2i48Htq4PuT73AVb9ionFyZrwYEITuOFGF+BydEtQ==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.51.3_react@18.2.0
+    dev: false
 
   /@humanwhocodes/config-array/0.11.14:
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -3769,6 +3783,15 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-hook-form/7.51.3_react@18.2.0:
+    resolution: {integrity: sha512-cvJ/wbHdhYx8aviSWh28w9ImjmVsb5Y05n1+FW786vEZQJV5STNM0pW6ujS+oiBecb0ARBxJFyAnXj9+GHXACQ==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: true
@@ -4030,7 +4053,7 @@ packages:
       recast: 0.23.6
       ts-morph: 18.0.0
       tsconfig-paths: 4.2.0
-      zod: 3.22.4
+      zod: 3.22.5
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -4710,6 +4733,5 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zod/3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
-    dev: true
+  /zod/3.22.5:
+    resolution: {integrity: sha512-HqnGsCdVZ2xc0qWPLdO25WnseXThh0kEYKIdV5F/hTHO75hNZFp8thxSeHhiPrHZKrFTo1SOgkAj9po5bexZlw==}
