@@ -17,8 +17,10 @@ import { Input } from "@/components/ui/input";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useLocalStorage } from "react-use";
+import { nanoid } from "nanoid";
 
 interface ProjectItem {
+  id: string;
   companyName: string;
   deadline: string;
   url: string;
@@ -56,6 +58,7 @@ export function CreateProjectForm({ setOpen }: Props) {
     setValue([
       ...currentValue,
       {
+        id: nanoid(),
         companyName: values.companyName,
         deadline: values.deadline,
         url: values.url,

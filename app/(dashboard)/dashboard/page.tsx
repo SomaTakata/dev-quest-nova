@@ -5,9 +5,11 @@ import Card from "./_components/Card";
 import { CardList } from "./_components/CardList";
 import DashBoardHeader from "./_components/DashBoardTitle";
 import { useLocalStorage } from "react-use";
+import { nanoid } from "nanoid";
 
 export default function Home() {
   interface ProjectItem {
+    id: string;
     companyName: string;
     deadline: string;
     url: string;
@@ -35,6 +37,7 @@ export default function Home() {
                   companyName={item.companyName}
                   deadline={item.deadline}
                   url={item.url}
+                  id={item.id}
                 />
               );
             })}

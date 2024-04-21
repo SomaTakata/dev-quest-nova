@@ -2,11 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import React from "react";
 interface ProjectItem {
+  id: string;
   companyName: string;
   deadline: string;
   url: string;
 }
-const Card = ({ companyName, deadline, url }: ProjectItem) => {
+const Card = ({ companyName, deadline, url, id }: ProjectItem) => {
   const calculateDaysUntilDeadline = (deadline: string) => {
     const today = new Date();
     const deadlineDate = new Date(deadline);
