@@ -29,7 +29,7 @@ const formSchema = z.object({
   }),
 });
 
-interface Props {
+export interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
 }
