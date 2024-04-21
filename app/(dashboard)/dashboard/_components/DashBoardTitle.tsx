@@ -13,10 +13,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
 import React, { useState } from "react";
-import { CreateProjectForm } from "./CreateProjectForm";
+import { CreateProjectForm, Props } from "./CreateProjectForm";
 
-const DashBoardHeader = () => {
-  const [open, setOpen] = useState(false);
+const DashBoardHeader = ({ open, setOpen }: Props) => {
   return (
     <div className="w-full flex justify-between items-center">
       <div className="flex flex-col">
@@ -30,7 +29,7 @@ const DashBoardHeader = () => {
           <PlusCircle size={30} />
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px] p-8">
-          <DialogHeader>
+          <DialogHeader className="mb-3">
             <DialogTitle>ESの情報を登録します</DialogTitle>
           </DialogHeader>
           <div className="w-full">
