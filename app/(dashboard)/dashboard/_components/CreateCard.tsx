@@ -1,14 +1,8 @@
 "use client";
-import { Card } from "@/components/ui/card";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { PlusCircle } from "lucide-react";
 import React, { useState } from "react";
 import CardForm from "./CardForm";
-
-interface Props {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
 
 const CreateCard = () => {
   const [open, setOpen] = useState(false);

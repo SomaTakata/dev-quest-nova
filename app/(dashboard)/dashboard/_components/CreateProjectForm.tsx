@@ -14,8 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { DialogClose, DialogFooter } from "@/components/ui/dialog";
-import { useState } from "react";
+import { DialogFooter } from "@/components/ui/dialog";
 import { useLocalStorage } from "react-use";
 import { nanoid } from "nanoid";
 
@@ -119,11 +118,9 @@ export function CreateProjectForm({ setOpen }: Props) {
           )}
         />
         <DialogFooter className="sm:justify-start ">
-          {/* <DialogClose asChild> */}
           <Button type="submit" className="my-3 w-full ">
             作成
           </Button>
-          {/* </DialogClose> */}
         </DialogFooter>
       </form>
     </Form>
