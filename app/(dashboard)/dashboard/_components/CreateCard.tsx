@@ -1,11 +1,12 @@
 "use client";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { PlusCircle } from "lucide-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import CardForm from "./CardForm";
+import { UserOpen } from "../page";
 
 const CreateCard = () => {
-  const [open, setOpen] = useState(false);
+  const { open, setOpen } = useContext(UserOpen);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -16,7 +17,7 @@ const CreateCard = () => {
           <PlusCircle className="text-muted-foreground/40" size={36} />
         </div>
       </DialogTrigger>
-      <CardForm setOpen={setOpen} />
+      <CardForm />
     </Dialog>
   );
 };

@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { DialogFooter } from "@/components/ui/dialog";
 import { useLocalStorage } from "react-use";
 import { nanoid } from "nanoid";
+import { useContext } from "react";
+import { UserOpen } from "../page";
 
 interface ProjectItem {
   id: string;
@@ -37,11 +39,9 @@ const formSchema = z.object({
   }),
 });
 
-interface Props {
-  setOpen: (open: boolean) => void;
-}
+export function CreateProjectForm() {
+  const { setOpen } = useContext(UserOpen);
 
-export function CreateProjectForm({ setOpen }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

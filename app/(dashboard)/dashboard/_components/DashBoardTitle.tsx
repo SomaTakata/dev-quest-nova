@@ -7,11 +7,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { PlusCircle } from "lucide-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { CreateProjectForm } from "./CreateProjectForm";
+import { UserOpen } from "../page";
 
 const DashBoardHeader = () => {
-  const [open, setOpen] = useState(false);
+  const { open, setOpen } = useContext(UserOpen);
   return (
     <div className="w-full flex justify-between items-center">
       <div className="flex flex-col">
@@ -29,7 +30,7 @@ const DashBoardHeader = () => {
             <DialogTitle>ESの情報を登録します</DialogTitle>
           </DialogHeader>
           <div className="w-full">
-            <CreateProjectForm setOpen={setOpen} />
+            <CreateProjectForm />
           </div>
         </DialogContent>
       </Dialog>
