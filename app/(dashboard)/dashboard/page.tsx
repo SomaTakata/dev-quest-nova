@@ -6,6 +6,7 @@ import { CardList } from "./_components/CardList";
 import DashBoardHeader from "./_components/DashBoardTitle";
 import { useLocalStorage } from "react-use";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   interface ProjectItem {
@@ -14,9 +15,22 @@ export default function Home() {
     deadline: string;
     url: string;
   }
-  const [value] = useLocalStorage<ProjectItem[]>("test");
 
-  console.log(value);
+  const [values, setValues] = useState<ProjectItem[]>([]);
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("test");
+    if (data) {
+      try {
+        setValues(JSON.parse(data));
+      } catch (error) {
+        console.error("Parsing error:", error);
+        setValues([]);
+      }
+    }
+  }, []);
+
+  // console.log(value);
   return (
     <div className="h-full w-full flex relative">
       <SideBar />
@@ -29,17 +43,16 @@ export default function Home() {
           {/* カードリスト */}
           <CardList>
             {/* カード */}
-            {value?.map((item) => {
+            {values?.map((item) => {
               console.log(item);
               return (
-                <Link href={`/dashboard/${item.id}`}>
-                  <Card
-                    key={item.id}
-                    companyName={item.companyName}
-                    deadline={item.deadline}
-                    url={item.url}
-                  />
-                </Link>
+                <Card
+                  key={item.id}
+                  companyName={item.companyName}
+                  deadline={item.deadline}
+                  url={item.url}
+                  id={item.id}
+                />
               );
             })}
           </CardList>
