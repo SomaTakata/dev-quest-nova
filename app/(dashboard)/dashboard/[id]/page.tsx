@@ -19,6 +19,8 @@ const page = () => {
   const pathname = usePathname();
   const [values, setValues] = useState<ProjectItem[]>([]);
   const { value, setValue } = useContext(DataContext);
+  const [questionAI, setQuestionAI] = useState(false);
+  const [questionOwn, setQuestionOwn] = useState(false);
   console.log(value);
   useEffect(() => {
     if (value) {
@@ -30,6 +32,8 @@ const page = () => {
 
   const filteredProjects = values.filter((item) => item.id === projectId);
   console.log(filteredProjects[0]);
+  console.log("questionAI =" + questionAI);
+  console.log("questionOwn =" + questionOwn);
 
   return (
     <div className="h-full w-full flex relative">
@@ -61,14 +65,25 @@ const page = () => {
               </div>
               <div className="px-7">
                 <div className="h-8 w-full" />
-                <div className="gap-4 flex justify-between">
-                  <Button size="sm" className="w-[50%] bg-primary/70">
-                    質問を深堀する
-                  </Button>
-                  <Button size="sm" className="w-[50%] bg-primary/70">
-                    そのまま記入する
-                  </Button>
-                </div>
+
+                {!questionAI && !questionOwn && (
+                  <div className="gap-4 flex justify-between">
+                    <Button
+                      size="sm"
+                      className="w-[50%] bg-primary/70"
+                      onClick={() => setQuestionAI((prev) => !prev)}
+                    >
+                      質問を深堀する
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="w-[50%] bg-primary/70"
+                      onClick={() => setQuestionOwn((prev) => !prev)}
+                    >
+                      そのまま記入する
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
