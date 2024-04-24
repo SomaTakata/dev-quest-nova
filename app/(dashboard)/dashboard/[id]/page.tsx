@@ -6,6 +6,9 @@ import EditorBoardHeader from "./_components/EditorBoardTitle";
 import { DataContext } from "../../layout";
 import { usePathname } from "next/navigation";
 import { Progress } from "@/components/ui/progress";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 interface ProjectItem {
   id: string;
   companyName: string;
@@ -41,13 +44,32 @@ const page = () => {
           />
           <div className="h-10 w-full " />
           <div className="">
-            <p className="text-foreground/70 text-xl font-bold mb-1">質問</p>
-            <div className=" w-full p-8 rounded-lg border border-card-foreground/10 bg-card  shadow-md">
-              <div>
-                <input type="checkbox"></input>
+            {/* <p className="text-foreground/70 text-lg font-bold mb-1 ml-2">
+              質問
+            </p> */}
+            <div className="w-full relative flex flex-col p-8 rounded-lg border border-card-foreground/10 bg-card  shadow-md">
+              <div className="">
+                <Checkbox className="border-foreground absolute w-4 h-4 left-6 top-9" />
+                <div className="w-full px-7 text-sm font-bold">
+                  問1)
+                  MIXIのインターンシップで挑戦してみたいことや目的、目標を教えてください(500文字以内)*
+                </div>
+                <Trash2
+                  className="text-foreground/30
+                w-5 h-5 absolute right-6 top-8 "
+                />
               </div>
-              <div></div>
-              <div></div>
+              <div className="px-7">
+                <div className="h-8 w-full" />
+                <div className="gap-4 flex justify-between">
+                  <Button size="sm" className="w-[50%] bg-primary/70">
+                    質問を深堀する
+                  </Button>
+                  <Button size="sm" className="w-[50%] bg-primary/70">
+                    そのまま記入する
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
