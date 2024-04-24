@@ -24,7 +24,7 @@ const Card = ({ companyName, deadline, url, id }: ProjectItem) => {
 
   return (
     <Link href={`/dashboard/${id}`}>
-      <div className=" w-full p-7 rounded-lg border border-card-foreground/10 bg-card  shadow-md ">
+      <div className=" w-full p-8 rounded-lg border border-card-foreground/10 bg-card  shadow-md ">
         <div className="px-3">
           <div className="flex items-center justify-between mb-7">
             <p className=" font-bold text-xl ">{companyName}</p>
@@ -36,11 +36,9 @@ const Card = ({ companyName, deadline, url, id }: ProjectItem) => {
               あと{daysUntilDeadline}日
             </p>
           </div>
-
-          <div className="flex mb-4 gap-5 items-center">
+          <div className="flex mb-3 gap-5 items-center">
             <p className="text-primary text-sm font-semibold">進捗</p>
-
-            <Progress value={33} className="h-3 w-[60%]" />
+            <Progress value={33} className="h-3 w-[70%]" />
             <p className="text-muted-foreground/50 text-sm font-semibold">
               60%
             </p>

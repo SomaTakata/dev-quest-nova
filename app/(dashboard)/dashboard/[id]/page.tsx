@@ -5,6 +5,7 @@ import NavBar from "../../_components/NavBar";
 import EditorBoardHeader from "./_components/EditorBoardTitle";
 import { DataContext } from "../../layout";
 import { usePathname } from "next/navigation";
+import { Progress } from "@/components/ui/progress";
 interface ProjectItem {
   id: string;
   companyName: string;
@@ -31,10 +32,24 @@ const page = () => {
     <div className="h-full w-full flex relative">
       <SideBar />
       <NavBar />
-      <div className="z-10 w-full h-full ml-52 pt-10  ">
-        <div className="p-10   flex flex-col">
+      <div className="z-10 w-full  h-full ml-52 pt-10  ">
+        <div className="p-10 flex flex-col">
           {/* 上部タイトルとアイコン */}
-          <EditorBoardHeader companyName={filteredProjects[0]?.companyName} />
+          <EditorBoardHeader
+            companyName={filteredProjects[0]?.companyName}
+            deadline={filteredProjects[0]?.deadline}
+          />
+          <div className="h-10 w-full " />
+          <div className="">
+            <p className="text-foreground/70 text-xl font-bold mb-1">質問</p>
+            <div className=" w-full p-8 rounded-lg border border-card-foreground/10 bg-card  shadow-md">
+              <div>
+                <input type="checkbox"></input>
+              </div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
