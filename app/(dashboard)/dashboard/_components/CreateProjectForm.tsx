@@ -17,8 +17,9 @@ import { Input } from "@/components/ui/input";
 import { DialogFooter } from "@/components/ui/dialog";
 import { useLocalStorage } from "react-use";
 import { nanoid } from "nanoid";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserOpen } from "../page";
+import { DataContext } from "../../layout";
 
 interface ProjectItem {
   id: string;
@@ -51,7 +52,15 @@ export function CreateProjectForm() {
     },
   });
 
-  const [value, setValue, remove] = useLocalStorage<ProjectItem[]>("test", []);
+  const [values, setValues] = useState<ProjectItem[]>([]);
+  const { value, setValue } = useContext(DataContext);
+  console.log(value);
+  useEffect(() => {
+    if (value) {
+      setValues(value);
+    }
+  }, [value]);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     const currentValue = Array.isArray(value) ? value : [];
     setValue([

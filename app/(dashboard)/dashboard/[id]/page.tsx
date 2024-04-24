@@ -2,8 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import SideBar from "../../_components/SideBar";
 import NavBar from "../../_components/NavBar";
-import DashBoardHeader from "../_components/DashBoardTitle";
-import EditorBoardHeader from "./_components/DashBoardTitle";
+import EditorBoardHeader from "./_components/EditorBoardTitle";
 import { DataContext } from "../../layout";
 import { usePathname } from "next/navigation";
 interface ProjectItem {
