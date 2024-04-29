@@ -7,7 +7,7 @@ import { DataContext } from "../../layout";
 import { usePathname } from "next/navigation";
 import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Trash2 } from "lucide-react";
+import { LoaderCircle, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,8 +21,9 @@ const page = () => {
   const pathname = usePathname();
   const [values, setValues] = useState<ProjectItem[]>([]);
   const { value, setValue } = useContext(DataContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [questionAI, setQuestionAI] = useState(false);
-  const [questionOwn, setQuestionOwn] = useState(true);
+  const [questionOwn, setQuestionOwn] = useState(false);
   console.log(value);
   useEffect(() => {
     if (value) {
@@ -67,23 +68,34 @@ const page = () => {
               </div>
               <div className="px-7">
                 <div className="h-8 w-full" />
-
                 {!questionAI && !questionOwn && (
                   <div className="gap-4 flex justify-between">
                     <Button
                       size="sm"
-                      className="w-[50%] bg-primary/70"
-                      onClick={() => setQuestionAI((prev) => !prev)}
+                      className={`bg-primary/70 gap-3 ${isLoading ? "w-full" : "w-1/2"}`}
+                      onClick={() => {
+                        setIsLoading(true);
+                        setTimeout(() => {
+                          setIsLoading(false);
+                          setQuestionAI((prev) => !prev);
+                        }, 5000);
+                      }}
                     >
+                      {isLoading && (
+                        <LoaderCircle className="animate-spin h-5 w-5" />
+                      )}
                       質問を深堀する
                     </Button>
-                    <Button
-                      size="sm"
-                      className="w-[50%] bg-primary/70"
-                      onClick={() => setQuestionOwn((prev) => !prev)}
-                    >
-                      そのまま記入する
-                    </Button>
+
+                    {!isLoading && (
+                      <Button
+                        size="sm"
+                        className="w-[50%] bg-primary/70"
+                        onClick={() => setQuestionOwn((prev) => !prev)}
+                      >
+                        そのまま記入する
+                      </Button>
+                    )}
                   </div>
                 )}
                 {questionAI && <div>AIを深堀する</div>}
