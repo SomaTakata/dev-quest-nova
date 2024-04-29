@@ -9,6 +9,8 @@ import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 interface ProjectItem {
   id: string;
   companyName: string;
@@ -20,7 +22,7 @@ const page = () => {
   const [values, setValues] = useState<ProjectItem[]>([]);
   const { value, setValue } = useContext(DataContext);
   const [questionAI, setQuestionAI] = useState(false);
-  const [questionOwn, setQuestionOwn] = useState(false);
+  const [questionOwn, setQuestionOwn] = useState(true);
   console.log(value);
   useEffect(() => {
     if (value) {
@@ -83,6 +85,13 @@ const page = () => {
                       そのまま記入する
                     </Button>
                   </div>
+                )}
+                {questionAI && <div>AIを深堀する</div>}
+                {questionOwn && (
+                  <Textarea
+                    placeholder="入力をしてください。"
+                    className="border-foreground focus-visible:border-input"
+                  />
                 )}
               </div>
             </div>
