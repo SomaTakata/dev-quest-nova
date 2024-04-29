@@ -40,7 +40,7 @@ const Card = ({ companyName, deadline, url, id }: ProjectItem) => {
             <p className="text-primary text-sm font-semibold">進捗</p>
             <Progress value={33} className="h-3 w-[70%]" />
             <p className="text-muted-foreground/50 text-sm font-semibold">
-              60%
+              30%
             </p>
           </div>
         </div>
