@@ -15,9 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { DialogFooter } from "@/components/ui/dialog";
-import { useLocalStorage } from "react-use";
-import { nanoid } from "nanoid";
 import { useContext, useEffect, useState } from "react";
+import { nanoid } from "nanoid";
 import { UserOpen } from "../page";
 import { DataContext } from "../../layout";
 
@@ -40,7 +39,7 @@ const formSchema = z.object({
   }),
 });
 
-export function CreateProjectForm() {
+const CreateProjectForm = () => {
   const { setOpen } = useContext(UserOpen);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -134,4 +133,6 @@ export function CreateProjectForm() {
       </form>
     </Form>
   );
-}
+};
+
+export default CreateProjectForm;
