@@ -14,8 +14,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { DialogClose, DialogFooter } from "@/components/ui/dialog";
-import { useState } from "react";
+import { DialogFooter } from "@/components/ui/dialog";
+import { useLocalStorage } from "react-use";
+import { nanoid } from "nanoid";
+import { useContext, useEffect, useState } from "react";
+import { UserOpen } from "../page";
+import { DataContext } from "../../layout";
+
+interface ProjectItem {
+  id: string;
+  companyName: string;
+  deadline: string;
+  url: string;
+}
 
 const formSchema = z.object({
   companyName: z.string().min(1, {
@@ -29,12 +40,9 @@ const formSchema = z.object({
   }),
 });
 
-export interface Props {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
+export function CreateProjectForm() {
+  const { setOpen } = useContext(UserOpen);
 
-export function CreateProjectForm({ open, setOpen }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,7 +52,26 @@ export function CreateProjectForm({ open, setOpen }: Props) {
     },
   });
 
+  const [values, setValues] = useState<ProjectItem[]>([]);
+  const { value, setValue } = useContext(DataContext);
+  console.log(value);
+  useEffect(() => {
+    if (value) {
+      setValues(value);
+    }
+  }, [value]);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
+    const currentValue = Array.isArray(value) ? value : [];
+    setValue([
+      ...currentValue,
+      {
+        id: nanoid(),
+        companyName: values.companyName,
+        deadline: values.deadline,
+        url: values.url,
+      },
+    ]);
     setOpen(false);
   }
 
@@ -100,11 +127,9 @@ export function CreateProjectForm({ open, setOpen }: Props) {
           )}
         />
         <DialogFooter className="sm:justify-start ">
-          {/* <DialogClose asChild> */}
           <Button type="submit" className="my-3 w-full ">
             作成
           </Button>
-          {/* </DialogClose> */}
         </DialogFooter>
       </form>
     </Form>

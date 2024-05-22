@@ -1,21 +1,18 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
-import React, { useState } from "react";
-import { CreateProjectForm, Props } from "./CreateProjectForm";
+import React, { useContext, useState } from "react";
+import { CreateProjectForm } from "./CreateProjectForm";
+import { UserOpen } from "../page";
 
-const DashBoardHeader = ({ open, setOpen }: Props) => {
+const DashBoardHeader = () => {
+  const { open, setOpen } = useContext(UserOpen);
   return (
     <div className="w-full flex justify-between items-center">
       <div className="flex flex-col">
@@ -33,7 +30,7 @@ const DashBoardHeader = ({ open, setOpen }: Props) => {
             <DialogTitle>ESの情報を登録します</DialogTitle>
           </DialogHeader>
           <div className="w-full">
-            <CreateProjectForm open={open} setOpen={setOpen} />
+            <CreateProjectForm />
           </div>
         </DialogContent>
       </Dialog>

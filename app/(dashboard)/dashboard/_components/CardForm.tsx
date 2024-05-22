@@ -3,17 +3,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import React from "react";
-import { CreateProjectForm, Props } from "./CreateProjectForm";
+import React, { useContext } from "react";
+import { CreateProjectForm } from "./CreateProjectForm";
+import { UserOpen } from "../page";
 
-const CardForm = ({ open, setOpen }: Props) => {
+const CardForm = () => {
   return (
     <DialogContent className="sm:max-w-[425px] p-8">
       <DialogHeader className="mb-3">
         <DialogTitle>ESの情報を登録します</DialogTitle>
       </DialogHeader>
       <div className="w-full">
-        <CreateProjectForm open={open} setOpen={setOpen} />
+        <CreateProjectForm />
       </div>
     </DialogContent>
   );
