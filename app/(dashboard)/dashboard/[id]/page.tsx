@@ -11,6 +11,14 @@ import { LoaderCircle, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
 interface ProjectItem {
   id: string;
   companyName: string;
@@ -22,7 +30,7 @@ const page = () => {
   const [values, setValues] = useState<ProjectItem[]>([]);
   const { value, setValue } = useContext(DataContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [questionAI, setQuestionAI] = useState(false);
+  const [questionAI, setQuestionAI] = useState(true);
   const [questionOwn, setQuestionOwn] = useState(false);
   console.log(value);
   useEffect(() => {
@@ -56,9 +64,8 @@ const page = () => {
             </p> */}
             <div className="w-full relative flex flex-col p-8 rounded-lg border border-card-foreground/10 bg-card  shadow-md">
               <div className="">
-                <Checkbox className="border-foreground absolute w-4 h-4 left-6 top-9" />
-                <div className="w-full px-7 text-sm font-bold">
-                  問1)
+                <div className="w-full px-7 font-bold">
+                  問1）
                   MIXIのインターンシップで挑戦してみたいことや目的、目標を教えてください(500文字以内)*
                 </div>
                 <Trash2
@@ -69,7 +76,7 @@ const page = () => {
               <div className="px-7">
                 <div className="h-8 w-full" />
                 {!questionAI && !questionOwn && (
-                  <div className="gap-4 flex justify-between">
+                  <div className=" flex justify-between">
                     <Button
                       size="sm"
                       className={`bg-primary/70 gap-3 ${isLoading ? "w-full" : "w-1/2"}`}
@@ -98,7 +105,55 @@ const page = () => {
                     )}
                   </div>
                 )}
-                {questionAI && <div>AIを深堀する</div>}
+                {questionAI && (
+                  <div>
+                    <p className="text-foreground/40 text-sm font-bold mb-2">
+                      以下の質問に回答してください。
+                    </p>
+                    <Accordion type="multiple">
+                      <AccordionItem
+                        value="item-1"
+                        className={cn(
+                          "bg-primary text-primary-foreground transition-color duration-200 hover:opacity-100 py-1 font-bold px-7 rounded-lg mt-1",
+                        )}
+                      >
+                        <AccordionTrigger className="font-medium text-sm">
+                          具体的にどのスキルや知識を身に着けたいですか？
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          <div className="mt-1">
+                            <Textarea
+                              className="p-2 text-muted-foreground text-sm font-semibold"
+                              placeholder="回答を記入してください"
+                              disabled
+                              value="ありがとう"
+                            />
+                          </div>
+                          <Separator className="mt-6 " />
+                          <p className="font-medium my-3 ">
+                            {" "}
+                            具体的にどのスキルや知識を身に着けたいですか？
+                          </p>
+                          <div className="mt-2">
+                            <Textarea
+                              className="p-2 text-muted-foreground text-sm font-semibold"
+                              placeholder="回答を記入してください"
+                            />
+
+                            <div className="flex justify-end mt-3">
+                              <Button
+                                size="xs"
+                                className="w-36 font-bold text-xs text-secondary border border-primary-foreground"
+                              >
+                                質問を深掘る
+                              </Button>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </div>
+                )}
                 {questionOwn && (
                   <Textarea
                     placeholder="入力をしてください。"
