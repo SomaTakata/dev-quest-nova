@@ -39,7 +39,15 @@ export default function Home() {
           throw new Error("Failed to fetch project data");
         }
         const data = await response.json();
-        console.log(data);
+
+        const formattedData = data.projects.map((project: any) => ({
+          id: project.id,
+          companyName: project.companyName,
+          deadline: project.deadline,
+          url: `/projects/${project.id}`,
+        }));
+
+        setValues(formattedData);
       } catch (error) {
         console.error("Error fetching project data:", error);
       }

@@ -107,7 +107,7 @@ const page = () => {
                 )}
                 {questionAI && (
                   <div>
-                    <p className="text-foreground/40 text-sm font-bold mb-2">
+                    <p className="text-foreground/40 text-sm font-bold mb-2 tracking-wide">
                       以下の質問に回答してください。
                     </p>
                     <Accordion type="multiple">
@@ -117,7 +117,7 @@ const page = () => {
                           "bg-primary text-primary-foreground transition-color duration-200 hover:opacity-100 py-1 font-bold px-7 rounded-lg mt-1",
                         )}
                       >
-                        <AccordionTrigger className="font-medium text-sm">
+                        <AccordionTrigger className="font-medium text-sm tracking-wide">
                           具体的にどのスキルや知識を身に着けたいですか？
                         </AccordionTrigger>
                         <AccordionContent>
@@ -130,7 +130,7 @@ const page = () => {
                             />
                           </div>
                           <Separator className="mt-6 " />
-                          <p className="font-medium my-3 ">
+                          <p className="font-medium my-3 tracking-wide">
                             {" "}
                             具体的にどのスキルや知識を身に着けたいですか？
                           </p>
