@@ -1,15 +1,11 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import SideBar from "../../_components/SideBar";
 import NavBar from "../../_components/NavBar";
 import EditorBoardHeader from "./_components/EditorBoardTitle";
-import { DataContext } from "../../layout";
 import { usePathname } from "next/navigation";
-import { Progress } from "@/components/ui/progress";
-import { Checkbox } from "@/components/ui/checkbox";
 import { LoaderCircle, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Accordion,
@@ -28,16 +24,10 @@ interface ProjectItem {
 const page = () => {
   const pathname = usePathname();
   const [values, setValues] = useState<ProjectItem[]>([]);
-  const { value, setValue } = useContext(DataContext);
   const [isLoading, setIsLoading] = useState(false);
   const [questionAI, setQuestionAI] = useState(true);
   const [questionOwn, setQuestionOwn] = useState(false);
-  console.log(value);
-  useEffect(() => {
-    if (value) {
-      setValues(value);
-    }
-  }, [value]);
+
   const pathParts = pathname.split("/");
   const projectId = pathParts[2];
 

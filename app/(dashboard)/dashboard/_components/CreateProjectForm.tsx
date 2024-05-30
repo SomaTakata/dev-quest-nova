@@ -15,10 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { DialogFooter } from "@/components/ui/dialog";
-import { useContext, useEffect, useState } from "react";
-import { nanoid } from "nanoid";
+import { useContext, useState } from "react";
 import { UserOpen } from "../page";
-import { DataContext } from "../../layout";
 
 interface ProjectItem {
   id: string;
@@ -52,25 +50,9 @@ const CreateProjectForm = () => {
   });
 
   const [values, setValues] = useState<ProjectItem[]>([]);
-  const { value, setValue } = useContext(DataContext);
-  console.log(value);
-  useEffect(() => {
-    if (value) {
-      setValues(value);
-    }
-  }, [value]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const currentValue = Array.isArray(value) ? value : [];
-    setValue([
-      ...currentValue,
-      {
-        id: nanoid(),
-        companyName: values.companyName,
-        deadline: values.deadline,
-        url: values.url,
-      },
-    ]);
+    console.log(values);
     setOpen(false);
   }
 
