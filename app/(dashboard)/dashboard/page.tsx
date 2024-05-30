@@ -5,8 +5,6 @@ import NavBar from "../_components/NavBar";
 import Card from "./_components/Card";
 import { CardList } from "./_components/CardList";
 import DashBoardHeader from "./_components/DashBoardTitle";
-import { DataContext } from "../layout";
-import { usePathname } from "next/navigation";
 
 interface ProjectItem {
   id: string;
@@ -26,9 +24,7 @@ export const UserOpen = createContext<UserOpenType>({
 });
 
 export default function Home() {
-  const pathname = usePathname();
   const [values, setValues] = useState<ProjectItem[]>([]);
-  const { value } = useContext(DataContext);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {

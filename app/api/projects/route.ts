@@ -7,7 +7,7 @@ export async function GET() {
 
   const { data: projects, error } = await supabase
     .from("Project")
-    .select("id, userid, companyName, deadline, createdat");
+    .select("id, userId, companyName, deadline, createDate");
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
