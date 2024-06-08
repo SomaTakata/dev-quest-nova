@@ -6,12 +6,12 @@ import React from "react";
 
 interface ProjectItem {
   id: string;
-  companyName: string;
+  company_name: string;
   deadline: string;
   url: string;
 }
 
-const Card = ({ companyName, deadline, url, id }: ProjectItem) => {
+const Card = ({ company_name, deadline, url, id }: ProjectItem) => {
   const calculateDaysUntilDeadline = (deadline: string) => {
     const today = new Date();
     const deadlineDate = new Date(deadline);
@@ -27,7 +27,7 @@ const Card = ({ companyName, deadline, url, id }: ProjectItem) => {
       <div className=" w-full p-8 rounded-lg border border-card-foreground/10 bg-card  shadow-md ">
         <div className="px-3">
           <div className="flex items-center justify-between mb-7">
-            <p className=" font-bold text-xl ">{companyName}</p>
+            <p className=" font-bold text-xl ">{company_name}</p>
             <Badge className="h-6 bg-green-400">提出済み</Badge>
           </div>
           <div className="flex  mb-2 gap-5 font-semibold items-center">

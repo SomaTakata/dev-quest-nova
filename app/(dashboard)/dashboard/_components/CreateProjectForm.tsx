@@ -20,13 +20,13 @@ import { useRouter } from "next/navigation";
 import { uuid } from "uuidv4";
 interface ProjectItem {
   id: string;
-  companyName: string;
+  company_name: string;
   deadline: string;
   url: string;
 }
 
 const formSchema = z.object({
-  companyName: z.string().min(1, {
+  company_name: z.string().min(1, {
     message: "必須項目です",
   }),
   deadline: z.string().min(1, {
@@ -50,7 +50,7 @@ const CreateProjectForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      companyName: "",
+      company_name: "",
       deadline: "",
       url: "",
     },
@@ -71,8 +71,8 @@ const CreateProjectForm = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          projectId: uuid(),
-          companyName: values.companyName,
+          id: uuid(),
+          company_name: values.company_name,
           deadline: values.deadline,
           url: values.url || "",
         }),
@@ -85,7 +85,7 @@ const CreateProjectForm = () => {
       const data = await response.json();
       setValues((prevValues) => [...prevValues, data]);
       setOpen(false);
-      router.push(`/dashboard/projects/${data.projectId}`);
+      router.push(`/dashboard/projects/${data.id}`);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -96,7 +96,7 @@ const CreateProjectForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormField
           control={form.control}
-          name="companyName"
+          name="company_name"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-bold">会社名</FormLabel>

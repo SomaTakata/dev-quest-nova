@@ -10,9 +10,9 @@ export async function GET(
 
   try {
     const { data: projects, error } = await supabase
-      .from("Project")
-      .select("projectId, companyName, deadline, createDate")
-      .eq("userId", userId);
+      .from("projects")
+      .select("id, company_name, deadline, created_at")
+      .eq("user_id", userId);
 
     if (error) {
       console.error("Error fetching projects:", error.message);
@@ -37,18 +37,18 @@ export async function POST(
   const { userId } = params;
 
   try {
-    const { companyName, projectId, deadline, url } = await request.json();
+    const { id, company_name, deadline, url } = await request.json();
 
     const { data, error } = await supabase
-      .from("Project")
-      .insert([{ userId, projectId, companyName, deadline, url }]);
+      .from("projects")
+      .insert([{ id, user_id: userId, company_name, deadline, url }]);
 
     if (error) {
       console.error("Error inserting project:", error.message);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ projectId }, { status: 201 });
+    return NextResponse.json({ data }, { status: 201 });
   } catch (error) {
     console.error("Unexpected error:", error);
     return NextResponse.json(
