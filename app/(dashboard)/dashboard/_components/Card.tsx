@@ -23,7 +23,7 @@ const Card = ({ companyName, deadline, url, id }: ProjectItem) => {
   const daysUntilDeadline = calculateDaysUntilDeadline(deadline);
 
   return (
-    <Link href={`/dashboard/${id}`}>
+    <Link href={`/dashboard/projects/${id}`}>
       <div className=" w-full p-8 rounded-lg border border-card-foreground/10 bg-card  shadow-md ">
         <div className="px-3">
           <div className="flex items-center justify-between mb-7">
