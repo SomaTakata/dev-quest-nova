@@ -5,9 +5,10 @@ import NavBar from "../_components/NavBar";
 import Card from "./_components/Card";
 import { CardList } from "./_components/CardList";
 import DashBoardHeader from "./_components/DashBoardTitle";
+import { useAuth } from "@clerk/nextjs";
 
 interface ProjectItem {
-  id: string;
+  projectId: string;
   companyName: string;
   deadline: string;
   url: string;
@@ -26,21 +27,24 @@ export const UserOpen = createContext<UserOpenType>({
 export default function Home() {
   const [values, setValues] = useState<ProjectItem[]>([]);
   const [open, setOpen] = useState(false);
+  const { userId, isLoaded } = useAuth();
 
   useEffect(() => {
+    if (!isLoaded || !userId) return; // userIdが取得できない場合、処理を中断
+
     async function fetchProjects() {
       try {
-        const response = await fetch("/api/projects");
+        const response = await fetch(`/api/users/${userId}/projects`);
         if (!response.ok) {
           throw new Error("Failed to fetch project data");
         }
         const data = await response.json();
 
         const formattedData = data.projects.map((project: any) => ({
-          id: project.id,
+          projectId: project.projectId,
           companyName: project.companyName,
           deadline: project.deadline,
-          url: `/projects/${project.id}`,
+          url: `/projects/${project.projectId}`,
         }));
 
         setValues(formattedData);
@@ -50,7 +54,7 @@ export default function Home() {
     }
 
     fetchProjects();
-  }, []);
+  }, [isLoaded, userId]); // userIdが変更されたときにのみ再実行
 
   const openValue = {
     open,
@@ -69,11 +73,11 @@ export default function Home() {
             <CardList>
               {values.map((item) => (
                 <Card
-                  key={item.id}
+                  key={item.projectId}
                   companyName={item.companyName}
                   deadline={item.deadline}
                   url={item.url}
-                  id={item.id}
+                  id={item.projectId}
                 />
               ))}
             </CardList>
