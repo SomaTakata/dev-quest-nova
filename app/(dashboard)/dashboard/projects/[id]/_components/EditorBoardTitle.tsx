@@ -1,21 +1,27 @@
-"use client";
-
-import { Progress } from "@/components/ui/progress";
+import React from "react";
 
 interface EditorProps {
-  companyName: string;
+  company_name: string;
   deadline: string;
 }
 
-const EditorBoardHeader = ({ companyName, deadline }: EditorProps) => {
+const calculateDaysLeft = (deadline: string) => {
+  const deadlineDate = new Date(deadline);
+  const currentDate = new Date();
+  const timeDiff = deadlineDate.getTime() - currentDate.getTime();
+  const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24)); // ミリ秒を日数に変換
+  return daysLeft;
+};
+
+const EditorBoardHeader = ({ company_name, deadline }: EditorProps) => {
+  const daysLeft = calculateDaysLeft(deadline);
+
   return (
-    <div className="w-full flex justify-between items-center">
-      <div className="flex flex-col w-[50%]">
-        <h1 className="text-foreground text-3xl font-bold">{companyName}</h1>
-        <p className="text-muted-foreground/50 font-bold text-sm">
-          締め切りは{deadline}です
-        </p>
-      </div>
+    <div className="flex flex-col w-[50%]">
+      <h1 className="text-foreground text-3xl font-bold">{company_name}</h1>
+      <p className="text-muted-foreground/50 font-bold text-sm">
+        締め切りまであと{daysLeft}日です
+      </p>
     </div>
   );
 };
