@@ -1,5 +1,3 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -17,7 +15,9 @@ import { Input } from "@/components/ui/input";
 import { DialogFooter } from "@/components/ui/dialog";
 import { useContext, useState } from "react";
 import { UserOpen } from "../page";
-
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { uuid } from "uuidv4";
 interface ProjectItem {
   id: string;
   companyName: string;
@@ -32,13 +32,20 @@ const formSchema = z.object({
   deadline: z.string().min(1, {
     message: "必須項目です",
   }),
-  url: z.string().min(0, {
-    message: "任意項目です",
-  }),
+  url: z
+    .string()
+    .optional()
+    .or(
+      z.string().min(1, {
+        message: "任意項目です",
+      }),
+    ),
 });
 
 const CreateProjectForm = () => {
   const { setOpen } = useContext(UserOpen);
+  const { userId, isLoaded } = useAuth();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,9 +58,37 @@ const CreateProjectForm = () => {
 
   const [values, setValues] = useState<ProjectItem[]>([]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    setOpen(false);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!isLoaded || !userId) {
+      console.error("User ID is not loaded or available");
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/users/${userId}/projects`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          projectId: uuid(),
+          companyName: values.companyName,
+          deadline: values.deadline,
+          url: values.url || "",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create project");
+      }
+
+      const data = await response.json();
+      setValues((prevValues) => [...prevValues, data]);
+      setOpen(false);
+      router.push(`/dashboard/projects/${data.projectId}`);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   return (
@@ -107,8 +142,8 @@ const CreateProjectForm = () => {
             </FormItem>
           )}
         />
-        <DialogFooter className="sm:justify-start ">
-          <Button type="submit" className="my-3 w-full ">
+        <DialogFooter className="sm:justify-start">
+          <Button type="submit" className="my-3 w-full">
             作成
           </Button>
         </DialogFooter>
