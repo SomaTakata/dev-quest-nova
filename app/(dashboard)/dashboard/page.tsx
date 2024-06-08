@@ -8,8 +8,8 @@ import DashBoardHeader from "./_components/DashBoardTitle";
 import { useAuth } from "@clerk/nextjs";
 
 interface ProjectItem {
-  projectId: string;
-  companyName: string;
+  id: string;
+  company_name: string;
   deadline: string;
   url: string;
 }
@@ -41,8 +41,8 @@ export default function Home() {
         const data = await response.json();
 
         const formattedData = data.projects.map((project: any) => ({
-          projectId: project.projectId,
-          companyName: project.companyName,
+          id: project.id,
+          company_name: project.company_name,
           deadline: project.deadline,
           url: `/projects/${project.projectId}`,
         }));
@@ -73,11 +73,11 @@ export default function Home() {
             <CardList>
               {values.map((item) => (
                 <Card
-                  key={item.projectId}
-                  companyName={item.companyName}
+                  key={item.id}
+                  company_name={item.company_name}
                   deadline={item.deadline}
                   url={item.url}
-                  id={item.projectId}
+                  id={item.id}
                 />
               ))}
             </CardList>
