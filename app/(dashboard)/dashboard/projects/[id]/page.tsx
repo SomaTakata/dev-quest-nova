@@ -30,10 +30,27 @@ interface ProjectItem {
 interface QuestionItem {
   id: string;
   content: string;
+  project_id: string;
   answer: string;
   checked: boolean;
   locked: boolean;
   created_at: string;
+  subquestions: SubQuestion[];
+}
+
+interface SubQuestion {
+  id: string;
+  created_at: string;
+  question_id: string;
+  subsubquestions: SubSubQuestion[];
+}
+
+interface SubSubQuestion {
+  id: string;
+  subquestion_id: string;
+  question_content: string;
+  answer_content: string;
+  locked: boolean;
 }
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -48,6 +65,8 @@ const Page = () => {
     `/api/projects/${id}/questions`,
     fetcher,
   );
+
+  console.log(data);
 
   const [isLoading, setIsLoading] = useState(false);
   const [questionAI, setQuestionAI] = useState(true);

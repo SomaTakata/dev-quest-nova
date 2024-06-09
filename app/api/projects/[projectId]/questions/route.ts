@@ -20,7 +20,19 @@ export async function GET(
           answer,
           checked,
           locked,
-          created_at
+          created_at,
+          subquestions (
+            id,
+            created_at,
+            subsubquestions (
+              id,
+              question_content,
+              answer_content,
+              locked,
+              important,
+              created_at
+            )
+          )
         )
       `,
       )
