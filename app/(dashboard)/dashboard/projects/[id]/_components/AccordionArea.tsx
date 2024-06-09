@@ -80,7 +80,7 @@ const AccordionArea = ({
   return (
     <div
       key={indexNumber}
-      className="w-full relative flex flex-col p-6 rounded-lg  border border-card-foreground/10 bg-card shadow-md"
+      className="w-full relative flex flex-col px-6 pt-6 pb-4 rounded-lg  border border-card-foreground/10 bg-card shadow-md"
     >
       <Textarea
         className={`bg-[#FFFFFF] py-2`}
