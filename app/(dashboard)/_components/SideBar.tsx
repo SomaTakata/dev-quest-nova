@@ -19,7 +19,6 @@ const SideBar = () => {
 
   const { signOut, user } = useClerk();
 
-  console.log(pathname);
   return (
     <div className="fixed left-0 w-48 z-30 bg-primary flex flex-col rounded-r-xl h-full">
       <div

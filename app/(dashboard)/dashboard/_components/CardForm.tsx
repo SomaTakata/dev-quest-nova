@@ -3,9 +3,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import React, { useContext } from "react";
-import { CreateProjectForm } from "./CreateProjectForm";
-import { UserOpen } from "../page";
+import CreateProjectForm from "./CreateProjectForm";
 
 const CardForm = () => {
   return (

@@ -8,8 +8,8 @@ import {
 } from "@/components/ui/dialog";
 import { PlusCircle } from "lucide-react";
 import React, { useContext, useState } from "react";
-import { CreateProjectForm } from "./CreateProjectForm";
 import { UserOpen } from "../page";
+import CreateProjectForm from "./CreateProjectForm";
 
 const DashBoardHeader = () => {
   const { open, setOpen } = useContext(UserOpen);
