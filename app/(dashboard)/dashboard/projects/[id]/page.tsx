@@ -112,7 +112,30 @@ const Page = () => {
       setIsLoading(false);
     }
   };
+  const handleDeleteQuestion = async (questionId: string) => {
+    try {
+      const response = await fetch(
+        `/api/projects/${id}/questions/${questionId}`,
+        {
+          method: "DELETE",
+        },
+      );
 
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.error || "Failed to delete question");
+      }
+
+      // SWRキャッシュを更新
+      mutate(`/api/projects/${id}/questions`);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error:", error.message);
+      } else {
+        console.error("Unexpected error", error);
+      }
+    }
+  };
   return (
     <div className="h-full w-full flex relative">
       <SideBar />
@@ -137,7 +160,10 @@ const Page = () => {
                   <div className="">
                     <div className="w-full px-7 font-bold items-center">
                       {question.content}
-                      <Trash2 className="text-foreground/30 w-5 h-5 absolute right-6 top-8 " />
+                      <Trash2
+                        className="hover:text-red-300 text-foreground/30 w-5 h-5 absolute right-6 top-8 cursor-pointer"
+                        onClick={() => handleDeleteQuestion(question.id)}
+                      />
                     </div>
                     <div className="px-7">
                       <div className="h-8 w-full" />
