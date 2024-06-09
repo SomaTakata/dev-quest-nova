@@ -138,8 +138,6 @@ const Page = () => {
   };
   return (
     <div className="h-full w-full flex relative">
-      <SideBar />
-      <NavBar />
       <div className="z-10 w-full h-full ml-52 pt-10">
         <div className="p-10 flex flex-col">
           {/* 上部タイトルとアイコン */}

@@ -64,8 +64,6 @@ export default function Home() {
   return (
     <div className="h-full w-full flex relative">
       <UserOpen.Provider value={openValue}>
-        <SideBar />
-        <NavBar />
         <div className="z-10 w-full h-full ml-52 pt-10">
           <div className="p-10 flex flex-col">
             <DashBoardHeader />
