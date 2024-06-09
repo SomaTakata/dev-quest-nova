@@ -39,7 +39,7 @@ interface QuestionItem {
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Page = () => {
-  const [showNewQuestion, setShowNewQuestion] = useState(false); // 新しい質問の表示制御用
+  const [showNewQuestion, setShowNewQuestion] = useState(true); // 新しい質問の表示制御用
   const [newQuestionContent, setNewQuestionContent] = useState(""); // 新しい質問の内容
   const { userId, isLoaded } = useAuth();
   const { id } = useParams<{ id: string }>();
@@ -119,10 +119,10 @@ const Page = () => {
             />
           )}
           <div className="h-8 w-full" />
-          <div className="">
-            <div className="w-full relative flex flex-col p-6 rounded-lg border border-card-foreground/10 bg-card shadow-md">
-              {questions.length > 0 ? (
-                questions.map((question, index) => (
+          <div className="space-y-6 flex flex-col">
+            {questions.length > 0 &&
+              questions.map((question, index) => (
+                <div className="w-full relative flex flex-col p-6 rounded-lg  border border-card-foreground/10 bg-card shadow-md">
                   <div key={question.id} className="">
                     <div className="w-full px-7 font-bold items-center">
                       {question.content}
@@ -130,32 +130,8 @@ const Page = () => {
                     </div>
                     <div className="px-7">
                       <div className="h-8 w-full" />
-                      {!questionAI && !questionOwn && (
-                        <div className=" flex justify-between">
-                          <Button
-                            size="sm"
-                            className={`bg-primary/70 gap-3 ${isLoading ? "w-full" : "w-1/2"}`}
-                            onClick={handleDeepDiveQuestion}
-                          >
-                            {isLoading && (
-                              <Loader2 className="animate-spin h-5 w-5" />
-                            )}
-                            質問を深堀する
-                          </Button>
-
-                          {!isLoading && (
-                            <Button
-                              size="sm"
-                              className="w-[50%] bg-primary/70"
-                              onClick={() => setQuestionOwn((prev) => !prev)}
-                            >
-                              そのまま記入する
-                            </Button>
-                          )}
-                        </div>
-                      )}
                       {questionAI && (
-                        <div>
+                        <div className="gap-8">
                           <p className="text-foreground/40 text-sm font-bold mb-2">
                             以下の質問に回答してください。
                           </p>
@@ -204,34 +180,34 @@ const Page = () => {
                       )}
                     </div>
                   </div>
-                ))
-              ) : (
-                <AccordionArea
-                  indexNumber={0}
-                  id=""
-                  locked={false}
-                  answerContent=""
-                  newQuestionContent={newQuestionContent}
-                  setShowNewQuestion={setShowNewQuestion}
-                  setNewQuestionContent={setNewQuestionContent}
-                  handleDeepDiveQuestion={handleDeepDiveQuestion}
-                  questionContent="新しい質問を入力してください"
-                />
-              )}
-            </div>
-            {questions.length > 0 && (
-              <div className="flex justify-end">
-                <Button
-                  size="xs"
-                  className="mt-6 bg-[#FFFFFF] text-primary hover:text-[#FFFFFF] border border-primary hover:bg-primary"
-                  onClick={() => setShowNewQuestion(true)} // ボタンをクリックで新しい質問の入力欄を表示
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  質問を追加
-                </Button>
-              </div>
+                </div>
+              ))}
+            {showNewQuestion && (
+              <AccordionArea
+                indexNumber={questions.length}
+                id=""
+                locked={false}
+                answerContent=""
+                newQuestionContent={newQuestionContent}
+                setShowNewQuestion={setShowNewQuestion}
+                setNewQuestionContent={setNewQuestionContent}
+                handleDeepDiveQuestion={handleDeepDiveQuestion}
+                questionContent="新しい質問を入力してください"
+              />
             )}
           </div>
+          {questions.length > 0 && !showNewQuestion && (
+            <div className="flex justify-end">
+              <Button
+                size="xs"
+                className="mt-6 bg-[#FFFFFF] text-primary hover:text-[#FFFFFF] border border-primary hover:bg-primary"
+                onClick={() => setShowNewQuestion(true)} // ボタンをクリックで新しい質問の入力欄を表示
+              >
+                <Plus className="mr-2 h-4 w-4" />
+                質問を追加
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import React, { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Check, Loader2 } from "lucide-react";
+import { mutate } from "swr";
 
 export type TextAreaProps = {
   id: string;
@@ -11,8 +12,8 @@ export type TextAreaProps = {
   locked: boolean;
   indexNumber: number;
   newQuestionContent: string;
-  setNewQuestionContent: (value: string) => void;
   setShowNewQuestion: (value: boolean) => void;
+  setNewQuestionContent: (value: string) => void;
   handleDeepDiveQuestion: () => Promise<void>;
 };
 
@@ -32,15 +33,18 @@ const AccordionArea = ({
   id,
   locked,
   answerContent,
+  newQuestionContent,
   setShowNewQuestion,
   setNewQuestionContent,
-  newQuestionContent,
   questionContent,
   handleDeepDiveQuestion,
 }: TextAreaProps) => {
+  const [inputValue, setInputValue] = useState<string>(
+    newQuestionContent || "",
+  );
   const [buttonState, setButtonState] = useState<ButtonStateType>("available");
   const [isActive, setIsActive] = useState(false);
-  console.log(newQuestionContent);
+
   const separator = (
     <>
       <Separator className="mt-8" />
@@ -66,18 +70,24 @@ const AccordionArea = ({
   };
 
   useEffect(() => {
-    setIsActive(newQuestionContent.length > 0);
-  }, [newQuestionContent]);
+    setIsActive(inputValue.length > 0);
+  }, [inputValue]);
+
+  useEffect(() => {
+    setNewQuestionContent(inputValue);
+  }, [inputValue, setNewQuestionContent]);
 
   return (
-    <div key={indexNumber}>
-      {indexNumber > 0 ? separator : <></>}
+    <div
+      key={indexNumber}
+      className="w-full relative flex flex-col p-6 rounded-lg  border border-card-foreground/10 bg-card shadow-md"
+    >
       <Textarea
         className={`bg-[#FFFFFF] py-2`}
         placeholder="ESの質問を記入してください"
-        value={newQuestionContent}
+        value={inputValue}
         disabled={locked}
-        onChange={(e) => setNewQuestionContent(e.target.value)}
+        onChange={(e) => setInputValue(e.target.value)}
       />
       <div className="flex justify-end mt-4">
         <Button
