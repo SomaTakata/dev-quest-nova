@@ -40,8 +40,9 @@ interface QuestionItem {
 
 interface SubQuestion {
   id: string;
+  content: string;
+  answer: string;
   created_at: string;
-  question_id: string;
   subsubquestions: SubSubQuestion[];
 }
 
@@ -56,17 +57,15 @@ interface SubSubQuestion {
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Page = () => {
-  const [showNewQuestion, setShowNewQuestion] = useState(true); // 新しい質問の表示制御用
+  const [showNewQuestion, setShowNewQuestion] = useState(false); // 新しい質問の表示制御用
   const [newQuestionContent, setNewQuestionContent] = useState(""); // 新しい質問の内容
   const { userId, isLoaded } = useAuth();
   const { id } = useParams<{ id: string }>();
 
   const { data, error } = useSWR<{ project: ProjectItem }>(
-    `/api/projects/${id}/questions`,
+    `/api/projects/${id}`,
     fetcher,
   );
-
-  console.log(data);
 
   const [isLoading, setIsLoading] = useState(false);
   const [questionAI, setQuestionAI] = useState(true);
@@ -76,7 +75,9 @@ const Page = () => {
   if (!data) return <div>Loading...</div>;
 
   const project = data?.project;
-  const questions = project?.questions || []; // デフォルトで空の配列を設定
+  const questions = project?.questions || [];
+
+  console.log(questions);
 
   const handleAddQuestion = async () => {
     if (!isLoaded || !userId) {
@@ -85,7 +86,7 @@ const Page = () => {
     }
 
     try {
-      const response = await fetch(`/api/projects/${id}/questions`, {
+      const response = await fetch(`/api/projects/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -104,7 +105,7 @@ const Page = () => {
       }
 
       // SWRキャッシュを更新
-      mutate(`/api/projects/${id}/questions`);
+      mutate(`/api/projects/${id}`);
       setShowNewQuestion(false); // 新しい質問の入力欄を隠す
       setNewQuestionContent(""); // 新しい質問の内容をリセット
     } catch (error) {
@@ -116,6 +117,57 @@ const Page = () => {
     }
   };
 
+  const handleAddSubSubQuestion = async (subquestionId: string) => {
+    if (!isLoaded || !userId) {
+      console.error("User ID is not loaded or available");
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/subquestions/${subquestionId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          question_content: "具体的にどのスキルや知識を身に着けたいですか？",
+          answer_content: "",
+          locked: false,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        throw new Error(
+          errorResponse.error || "Failed to create subsubquestion",
+        );
+      }
+
+      // SWRキャッシュを更新
+      mutate(`/api/projects/${id}`);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error:", error.message);
+      } else {
+        console.error("Unexpected error", error);
+      }
+    }
+  };
+  const handleDeepDiveSubSubQuestion = async (subquestionId: string) => {
+    setIsLoading(true);
+    try {
+      await handleAddSubSubQuestion(subquestionId);
+      setQuestionAI(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error during deep dive:", error.message);
+      } else {
+        console.error("Unexpected error during deep dive", error);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const handleDeepDiveQuestion = async () => {
     setIsLoading(true);
     try {
@@ -131,14 +183,12 @@ const Page = () => {
       setIsLoading(false);
     }
   };
+
   const handleDeleteQuestion = async (questionId: string) => {
     try {
-      const response = await fetch(
-        `/api/projects/${id}/questions/${questionId}`,
-        {
-          method: "DELETE",
-        },
-      );
+      const response = await fetch(`/api/questions/${questionId}`, {
+        method: "DELETE",
+      });
 
       if (!response.ok) {
         const errorResponse = await response.json();
@@ -146,7 +196,7 @@ const Page = () => {
       }
 
       // SWRキャッシュを更新
-      mutate(`/api/projects/${id}/questions`);
+      mutate(`/api/projects/${id}`);
     } catch (error) {
       if (error instanceof Error) {
         console.error("Error:", error.message);
@@ -155,6 +205,7 @@ const Page = () => {
       }
     }
   };
+
   return (
     <div className="h-full w-full flex relative">
       <div className="z-10 w-full h-full ml-52 pt-10">
@@ -189,47 +240,65 @@ const Page = () => {
                           <p className="text-foreground/40 text-sm font-bold mb-2">
                             以下の質問に回答してください。
                           </p>
-                          <Accordion type="multiple">
-                            <AccordionItem
-                              value="item-1"
-                              className={cn(
-                                "bg-primary text-primary-foreground transition-color duration-200 hover:opacity-100 py-1 font-bold px-7 rounded-lg mt-1",
-                              )}
-                            >
-                              <AccordionTrigger className="font-medium text-sm">
-                                具体的にどのスキルや知識を身に着けたいですか？
-                              </AccordionTrigger>
-                              <AccordionContent>
-                                <div className="mt-1">
-                                  <Textarea
-                                    className="p-2 text-muted-foreground text-sm font-semibold"
-                                    placeholder="回答を記入してください"
-                                    disabled
-                                    value="ありがとう"
-                                  />
-                                </div>
-                                <Separator className="mt-6 " />
-                                <p className="font-medium my-3 ">
-                                  具体的にどのスキルや知識を身に着けたいですか？
-                                </p>
-                                <div className="mt-2">
-                                  <Textarea
-                                    className="p-2 text-muted-foreground text-sm font-semibold"
-                                    placeholder="回答を記入してください"
-                                  />
-
+                          {question.subquestions.map((subquestion) => (
+                            <Accordion key={subquestion.id} type="multiple">
+                              <AccordionItem
+                                value="item-1"
+                                className={cn(
+                                  "bg-primary text-primary-foreground transition-color duration-200 hover:opacity-100 py-1 font-bold px-7 rounded-lg mt-1",
+                                )}
+                              >
+                                <AccordionTrigger className="font-medium text-sm">
+                                  {
+                                    subquestion.subsubquestions[0]
+                                      .question_content
+                                  }
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                  <div className="mt-1">
+                                    <Textarea
+                                      className="p-2 text-muted-foreground text-sm font-semibold"
+                                      placeholder="回答を記入してください"
+                                      disabled
+                                      value={
+                                        subquestion.subsubquestions[0]
+                                          .answer_content || ""
+                                      }
+                                    />
+                                  </div>
+                                  {subquestion.subsubquestions
+                                    .slice(1)
+                                    .map((subsubquestion) => (
+                                      <div key={subsubquestion.id}>
+                                        <Separator className="mt-6 " />
+                                        <p className="font-medium my-3 ">
+                                          {subsubquestion.question_content}
+                                        </p>
+                                        <div className="mt-2">
+                                          <Textarea
+                                            className="p-2 text-muted-foreground text-sm font-semibold"
+                                            placeholder="回答を記入してください"
+                                          />
+                                        </div>
+                                      </div>
+                                    ))}
                                   <div className="flex justify-end mt-3">
                                     <Button
                                       size="xs"
                                       className=" font-bold text-xs text-secondary border border-primary-foreground "
+                                      onClick={() =>
+                                        handleDeepDiveSubSubQuestion(
+                                          subquestion.id,
+                                        )
+                                      }
                                     >
                                       質問を深掘る
                                     </Button>
                                   </div>
-                                </div>
-                              </AccordionContent>
-                            </AccordionItem>
-                          </Accordion>
+                                </AccordionContent>
+                              </AccordionItem>
+                            </Accordion>
+                          ))}
                         </div>
                       )}
                     </div>
