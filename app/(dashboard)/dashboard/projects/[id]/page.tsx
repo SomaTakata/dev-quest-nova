@@ -240,65 +240,71 @@ const Page = () => {
                           <p className="text-foreground/40 text-sm font-bold mb-2">
                             以下の質問に回答してください。
                           </p>
-                          {question.subquestions.map((subquestion) => (
-                            <Accordion key={subquestion.id} type="multiple">
-                              <AccordionItem
-                                value="item-1"
-                                className={cn(
-                                  "bg-primary text-primary-foreground transition-color duration-200 hover:opacity-100 py-1 font-bold px-7 rounded-lg mt-1",
-                                )}
-                              >
-                                <AccordionTrigger className="font-medium text-sm">
-                                  {
-                                    subquestion.subsubquestions[0]
-                                      .question_content
-                                  }
-                                </AccordionTrigger>
-                                <AccordionContent>
-                                  <div className="mt-1">
-                                    <Textarea
-                                      className="p-2 text-muted-foreground text-sm font-semibold"
-                                      placeholder="回答を記入してください"
-                                      disabled
-                                      value={
-                                        subquestion.subsubquestions[0]
-                                          .answer_content || ""
-                                      }
-                                    />
-                                  </div>
-                                  {subquestion.subsubquestions
-                                    .slice(1)
-                                    .map((subsubquestion) => (
-                                      <div key={subsubquestion.id}>
-                                        <Separator className="mt-6 " />
-                                        <p className="font-medium my-3 ">
-                                          {subsubquestion.question_content}
-                                        </p>
-                                        <div className="mt-2">
-                                          <Textarea
-                                            className="p-2 text-muted-foreground text-sm font-semibold"
-                                            placeholder="回答を記入してください"
-                                          />
+                          <div className="flex flex-col gap-2">
+                            {question.subquestions.map((subquestion) => (
+                              <Accordion key={subquestion.id} type="multiple">
+                                <AccordionItem
+                                  value="item-1"
+                                  className={cn(
+                                    "bg-primary text-primary-foreground transition-color duration-200 hover:opacity-100 py-1 font-bold px-7 rounded-lg mt-1",
+                                  )}
+                                >
+                                  <AccordionTrigger className="font-medium text-sm">
+                                    {
+                                      subquestion.subsubquestions[0]
+                                        .question_content
+                                    }
+                                  </AccordionTrigger>
+                                  <AccordionContent>
+                                    <div className="mt-1">
+                                      <Textarea
+                                        className="p-2 text-muted-foreground text-sm font-semibold"
+                                        placeholder="回答を記入してください"
+                                        disabled
+                                        value={
+                                          subquestion.subsubquestions[0]
+                                            .answer_content || ""
+                                        }
+                                      />
+                                    </div>
+                                    {subquestion.subsubquestions
+                                      .slice(1)
+                                      .map((subsubquestion) => (
+                                        <div key={subsubquestion.id}>
+                                          <Separator className="mt-6 " />
+                                          <p className="font-medium my-3 ">
+                                            {subsubquestion.question_content}
+                                          </p>
+                                          <div className="mt-2">
+                                            <Textarea
+                                              className="p-2 text-muted-foreground text-sm font-semibold"
+                                              placeholder="回答を記入してください"
+                                            />
+                                          </div>
                                         </div>
+                                      ))}
+                                    {subquestion.subsubquestions.length ===
+                                      3 && <div className="h-6 w-full" />}
+                                    {subquestion.subsubquestions.length < 3 && (
+                                      <div className="flex justify-end mt-3">
+                                        <Button
+                                          size="xs"
+                                          className=" font-bold text-xs text-secondary border border-primary-foreground "
+                                          onClick={() =>
+                                            handleDeepDiveSubSubQuestion(
+                                              subquestion.id,
+                                            )
+                                          }
+                                        >
+                                          質問を深掘る
+                                        </Button>
                                       </div>
-                                    ))}
-                                  <div className="flex justify-end mt-3">
-                                    <Button
-                                      size="xs"
-                                      className=" font-bold text-xs text-secondary border border-primary-foreground "
-                                      onClick={() =>
-                                        handleDeepDiveSubSubQuestion(
-                                          subquestion.id,
-                                        )
-                                      }
-                                    >
-                                      質問を深掘る
-                                    </Button>
-                                  </div>
-                                </AccordionContent>
-                              </AccordionItem>
-                            </Accordion>
-                          ))}
+                                    )}
+                                  </AccordionContent>
+                                </AccordionItem>
+                              </Accordion>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>
