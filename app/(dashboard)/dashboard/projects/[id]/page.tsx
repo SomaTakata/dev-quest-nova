@@ -56,8 +56,8 @@ const Page = () => {
   if (error) return <div>Failed to load project data</div>;
   if (!data) return <div>Loading...</div>;
 
-  const project = data.project;
-  const questions = project.questions || []; // デフォルトで空の配列を設定
+  const project = data?.project;
+  const questions = project?.questions || []; // デフォルトで空の配列を設定
 
   const handleAddQuestion = async () => {
     if (!isLoaded || !userId) {
@@ -89,7 +89,11 @@ const Page = () => {
       setShowNewQuestion(false); // 新しい質問の入力欄を隠す
       setNewQuestionContent(""); // 新しい質問の内容をリセット
     } catch (error) {
-      console.error("Error:", error.message);
+      if (error instanceof Error) {
+        console.error("Error:", error.message);
+      } else {
+        console.error("Unexpected error", error);
+      }
     }
   };
 
@@ -99,7 +103,11 @@ const Page = () => {
       await handleAddQuestion();
       setQuestionAI(true);
     } catch (error) {
-      console.error("Error during deep dive:", error.message);
+      if (error instanceof Error) {
+        console.error("Error during deep dive:", error.message);
+      } else {
+        console.error("Unexpected error during deep dive", error);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -122,8 +130,11 @@ const Page = () => {
           <div className="space-y-6 flex flex-col">
             {questions.length > 0 &&
               questions.map((question, index) => (
-                <div className="w-full relative flex flex-col p-6 rounded-lg  border border-card-foreground/10 bg-card shadow-md">
-                  <div key={question.id} className="">
+                <div
+                  key={question.id}
+                  className="w-full relative flex flex-col p-6 rounded-lg border border-card-foreground/10 bg-card shadow-md"
+                >
+                  <div className="">
                     <div className="w-full px-7 font-bold items-center">
                       {question.content}
                       <Trash2 className="text-foreground/30 w-5 h-5 absolute right-6 top-8 " />
