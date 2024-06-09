@@ -7,10 +7,8 @@ export async function GET(
 ) {
   const supabase = createClient();
   const { projectId } = params;
-  console.log(projectId);
 
   try {
-    // プロジェクトと関連する質問を取得するクエリ
     const { data: project, error } = await supabase
       .from("projects")
       .select(

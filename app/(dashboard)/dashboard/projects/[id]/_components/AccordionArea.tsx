@@ -10,6 +10,10 @@ export type TextAreaProps = {
   answerContent: string;
   locked: boolean;
   indexNumber: number;
+  newQuestionContent: string;
+  setNewQuestionContent: (value: string) => void;
+  setShowNewQuestion: (value: boolean) => void;
+  handleDeepDiveQuestion: () => Promise<void>;
 };
 
 export type ButtonStateType = "available" | "loading" | "completed";
@@ -28,12 +32,15 @@ const AccordionArea = ({
   id,
   locked,
   answerContent,
+  setShowNewQuestion,
+  setNewQuestionContent,
+  newQuestionContent,
   questionContent,
+  handleDeepDiveQuestion,
 }: TextAreaProps) => {
-  const [inputValue, setInputValue] = useState<string>(answerContent || "");
   const [buttonState, setButtonState] = useState<ButtonStateType>("available");
   const [isActive, setIsActive] = useState(false);
-
+  console.log(newQuestionContent);
   const separator = (
     <>
       <Separator className="mt-8" />
@@ -59,8 +66,8 @@ const AccordionArea = ({
   };
 
   useEffect(() => {
-    setIsActive(inputValue.length > 0);
-  }, [inputValue]);
+    setIsActive(newQuestionContent.length > 0);
+  }, [newQuestionContent]);
 
   return (
     <div key={indexNumber}>
@@ -68,19 +75,19 @@ const AccordionArea = ({
       <Textarea
         className={`bg-[#FFFFFF] py-2`}
         placeholder="ESの質問を記入してください"
-        value={inputValue}
+        value={newQuestionContent}
         disabled={locked}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={(e) => setNewQuestionContent(e.target.value)}
       />
       <div className="flex justify-end mt-4">
         <Button
           className="w-full font-bold text-primary-foreground hover:bg-primary/90 bg-primary/80 border border-primary-foreground"
           disabled={locked}
-          onClick={() => {
+          onClick={async () => {
             setButtonState("loading");
-            setTimeout(() => {
-              setButtonState("completed");
-            }, 1000);
+            await handleDeepDiveQuestion();
+            setButtonState("completed");
+            setShowNewQuestion(false);
           }}
         >
           {buttonProperties[buttonState].icon}
