@@ -311,7 +311,7 @@ const Page = () => {
                   </div>
                 </div>
               ))}
-            {showNewQuestion && (
+            {questions.length === 0 && (
               <AccordionArea
                 indexNumber={questions.length}
                 id=""
